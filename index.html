@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Browse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { margin:0; height:100vh; display:grid; place-items:center;
+           background:#0b0d1a; color:#e8e8ff; font-family:system-ui,sans-serif; }
+    form { display:flex; gap:8px; width:min(600px,90vw); }
+    input { flex:1; padding:14px 18px; border-radius:999px; border:1px solid #333a66;
+            background:#141833; color:inherit; font-size:16px; }
+    button { padding:0 22px; border-radius:999px; border:0; background:#6c63ff;
+             color:#fff; font-size:16px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <form id="f">
+    <input id="q" placeholder="Search or enter a URL" autofocus />
+    <button>Go</button>
+  </form>
+  <script>
+    document.getElementById("f").addEventListener("submit", (e) => {
+      e.preventDefault();
+      let v = document.getElementById("q").value.trim();
+      if (!v) return;
+      if (!/^https?:\/\//i.test(v)) {
+        v = v.includes(".") && !v.includes(" ")
+          ? "https://" + v
+          : "https://duckduckgo.com/html/?q=" + encodeURIComponent(v);
+      }
+      location.href = "/go?u=" + encodeURIComponent(v);
+    });
+  </script>
+</body>
+</html>
